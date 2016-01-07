@@ -2,13 +2,14 @@
 
 
 # imports
+import os
 from flask import Flask, render_template, request, session, \
     flash, redirect, url_for, g
 import sqlite3
 from functools import wraps
 
 # configuration
-DATABASE = 'blog.db'
+DATABASE = '/home/ubuntu/workspace/blog.db'
 USERNAME = 'admin'
 PASSWORD = 'admin'
 SECRET_KEY = 'hard_to_guess'
@@ -83,6 +84,9 @@ def logout():
     session.pop('logged_in', None)
     flash('You were logged out')
     return redirect(url_for('login'))
+
+#only required for cloud9
+app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 8080)))
 
 if __name__ == '__main__':
     app.run(debug=True)
